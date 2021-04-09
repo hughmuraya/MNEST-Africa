@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_wallet">Wallet</string>
+    <string name="menu_profile">My Profile</string>
+    <string name="action_logout">Log out</string>
+    <string name="reset_pass">Reset Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="find_apartment">Find Apartment</string>
+    <string name="my_apartment">My Apartment</string>
+</resources>
