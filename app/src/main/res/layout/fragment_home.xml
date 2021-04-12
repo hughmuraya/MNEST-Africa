@@ -113,7 +113,6 @@
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                                 app:fontFamily="sans-serif-medium" />
 
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -378,14 +377,38 @@
                                 android:layout_width="@dimen/spacing_large"
                                 android:layout_height="0dp" />
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/spacing_xmlarge"
                                 android:gravity="center_vertical"
-                                android:text="MNEST Africa Wallet"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                app:fontFamily="sans-serif-medium" />
+                                android:orientation="horizontal">
+
+
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="MNEST Africa Wallet"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                    app:fontFamily="sans-serif-medium" />
+
+                                <ImageButton
+                                    android:layout_width="@dimen/spacing_xmlarge"
+                                    android:layout_height="@dimen/spacing_xmlarge"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:src="@drawable/ic_hide_details" />
+
+                                <ImageButton
+                                    android:layout_width="@dimen/spacing_xmlarge"
+                                    android:layout_height="@dimen/spacing_xmlarge"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:src="@drawable/ic_show_details"
+                                    android:visibility="gone"/>
+
+
+                            </LinearLayout>
 
 
 
@@ -398,7 +421,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wallet Balance"
+                            android:text="Current Balance"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
                         <TextView

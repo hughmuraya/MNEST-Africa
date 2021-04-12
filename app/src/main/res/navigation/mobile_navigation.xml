@@ -10,5 +10,15 @@
         android:name="com.mnestafrica.android.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_menu_profile"
+        android:name="com.mnestafrica.android.fragments.MyProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_my_profile" />
+    <fragment
+        android:id="@+id/nav_menu_wallet"
+        android:name="com.mnestafrica.android.fragments.WalletFragment"
+        android:label="@string/menu_wallet"
+        tools:layout="@layout/fragment_wallet" />
 
 </navigation>

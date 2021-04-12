@@ -7,4 +7,6 @@
     <string name="sign_in">Sign In</string>
     <string name="find_apartment">Find Apartment</string>
     <string name="my_apartment">My Apartment</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="transactions">Transactions</string>
 </resources>
