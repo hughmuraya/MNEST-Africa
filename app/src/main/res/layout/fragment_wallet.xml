@@ -65,12 +65,14 @@
                                     app:fontFamily="sans-serif-medium" />
 
                                 <ImageButton
+                                    android:id="@+id/btn_hide_balance"
                                     android:layout_width="@dimen/spacing_xmlarge"
                                     android:layout_height="@dimen/spacing_xmlarge"
                                     android:background="?attr/selectableItemBackgroundBorderless"
                                     android:src="@drawable/ic_hide_details" />
 
                                 <ImageButton
+                                    android:id="@+id/btn_show_balance"
                                     android:layout_width="@dimen/spacing_xmlarge"
                                     android:layout_height="@dimen/spacing_xmlarge"
                                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -104,12 +106,21 @@
                                 android:textColor="@color/white" />
 
                             <TextView
+                                android:id="@+id/tv_wallet"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="24,561"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
                                 android:textColor="@android:color/white"
                                 app:fontFamily="sans-serif-medium" />
+
+                            <View
+                                android:id="@+id/current_wallet_hide"
+                                android:layout_width="match_parent"
+                                android:layout_height="34sp"
+                                android:layout_margin="@dimen/spacing_large"
+                                android:background="@color/grey_300"
+                                android:visibility="gone"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -249,8 +260,6 @@
                                 <RelativeLayout
                                     android:layout_width="35dp"
                                     android:layout_height="35dp">
-
-
 
                                     <ImageView
                                         android:layout_width="35dp"
@@ -398,6 +407,79 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=" KES 1,639"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/light_blue_500" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/spacing_large">
+
+                            <RelativeLayout
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="1dp">
+
+
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_top_up" />
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="@dimen/spacing_middle"
+                                android:layout_height="0dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sent"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10 jan 2021 11:20"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                                    android:textColor="@color/grey_40" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=" KES 10,615"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                                     android:textColor="@color/light_blue_500" />
 

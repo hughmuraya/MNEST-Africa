@@ -9,4 +9,8 @@
     <string name="my_apartment">My Apartment</string>
     <string name="update_profile">Update Profile</string>
     <string name="transactions">Transactions</string>
+    <string name="current_apartment">Current Apartment</string>
+    <string name="previous_apartments">Previous Apartments</string>
+    <string name="vacate_apartment">Vacate Apartment</string>
+    <string name="view_open_units">View open units</string>
 </resources>

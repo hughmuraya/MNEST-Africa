@@ -196,6 +196,14 @@
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
                                 app:fontFamily="sans-serif-medium" />
 
+                            <View
+                                android:id="@+id/rent_hide"
+                                android:layout_width="match_parent"
+                                android:layout_height="34sp"
+                                android:layout_margin="@dimen/spacing_large"
+                                android:background="@color/grey_300"
+                                android:visibility="gone"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -240,6 +248,14 @@
                                 android:text="0"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
                                 app:fontFamily="sans-serif-medium" />
+
+                            <View
+                                android:id="@+id/invoice_hide"
+                                android:layout_width="match_parent"
+                                android:layout_height="34sp"
+                                android:layout_margin="@dimen/spacing_large"
+                                android:background="@color/grey_300"
+                                android:visibility="gone"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -322,7 +338,7 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/buzz_inImageView"
+                                android:id="@+id/apartmentImageView"
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:paddingTop="@dimen/spacing_large"
@@ -355,6 +371,7 @@
                     android:layout_height="@dimen/spacing_large" />
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_wallet_balance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_medium"
@@ -395,12 +412,14 @@
                                     app:fontFamily="sans-serif-medium" />
 
                                 <ImageButton
+                                    android:id="@+id/btn_hide_balance_home"
                                     android:layout_width="@dimen/spacing_xmlarge"
                                     android:layout_height="@dimen/spacing_xmlarge"
                                     android:background="?attr/selectableItemBackgroundBorderless"
                                     android:src="@drawable/ic_hide_details" />
 
                                 <ImageButton
+                                    android:id="@+id/btn_show_balance_home"
                                     android:layout_width="@dimen/spacing_xmlarge"
                                     android:layout_height="@dimen/spacing_xmlarge"
                                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -431,6 +450,14 @@
                             android:text="0"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
                             app:fontFamily="sans-serif-medium" />
+
+                        <View
+                            android:id="@+id/wallet_hide"
+                            android:layout_width="match_parent"
+                            android:layout_height="34sp"
+                            android:layout_margin="@dimen/spacing_large"
+                            android:background="@color/grey_300"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:layout_width="wrap_content"
