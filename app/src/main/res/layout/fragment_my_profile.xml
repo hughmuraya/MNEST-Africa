@@ -327,7 +327,7 @@
                             android:textStyle="bold"/>
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tv_home"
+                            android:id="@+id/tv_current_unit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -340,29 +340,6 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/spacing_medium" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Previous Apartment:"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold"/>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tv_work"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text=""
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textStyle=""/>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 

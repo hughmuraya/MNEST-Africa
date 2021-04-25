@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/tools"
     android:id="@+id/frag_wallet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -332,155 +333,140 @@
                         android:layout_marginBottom="@dimen/spacing_medium"
                         android:gravity="center"
                         android:text="@string/transactions"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textColor="@color/grey_40"
                         app:fontFamily="sans-serif-medium" />
 
-                    <androidx.cardview.widget.CardView
+                    <androidx.coordinatorlayout.widget.CoordinatorLayout
+                        android:id="@+id/coordinator_lyt"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="2dp"
-                        app:cardUseCompatPadding="true">
+                        android:layout_height="match_parent">
 
-                        <LinearLayout
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/shimmer_my_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                shimmer:duration="800">
+
+                                <LinearLayout
+                                    android:id="@+id/shimmerInnerLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <include layout="@layout/placeholder_item" />
+
+                                </LinearLayout>
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="@dimen/actionBarSize"
+                                android:scrollbars="vertical"
+                                android:layout_marginTop="@dimen/spacing_large"
+                                android:visibility="gone"
+                                android:scrollingCache="true" />
+
+                        </FrameLayout>
+
+                        <androidx.core.widget.NestedScrollView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/spacing_large">
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                            <RelativeLayout
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginTop="1dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-
-                                <ImageView
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
+                                <LinearLayout
+                                    android:id="@+id/no_transactions_lyt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_top_up" />
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:visibility="gone"
+                                    android:paddingBottom="80dp"
+                                    android:orientation="vertical">
 
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/lab_image"
+                                        android:layout_width="170dp"
+                                        android:layout_height="170dp"
+                                        android:src="@drawable/ic_ewallet" />
 
-                            <View
-                                android:layout_width="@dimen/spacing_middle"
-                                android:layout_height="0dp" />
+                                    <TextView
+                                        android:id="@+id/no_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/spacing_large"
+                                        android:text="No Recent Transactions found."
+                                        android:textAlignment="center"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/no_brief"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/spacing_medium"
+                                        android:text="Transactions will appear here."
+                                        android:textAlignment="center"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
-                                <TextView
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/error_lyt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Receive"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
-
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10 jan 2021 11:20"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_40" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text=" KES 1,639"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                                    android:textColor="@color/light_blue_500" />
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="2dp"
-                        app:cardUseCompatPadding="true">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/spacing_large">
-
-                            <RelativeLayout
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginTop="1dp">
-
-
-                                <ImageView
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_top_up" />
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:visibility="gone"
+                                    android:paddingBottom="80dp"
+                                    android:orientation="vertical">
 
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/error_img"
+                                        android:layout_width="170dp"
+                                        android:layout_height="170dp"
+                                        android:src="@drawable/ic_error" />
 
-                            <View
-                                android:layout_width="@dimen/spacing_middle"
-                                android:layout_height="0dp" />
+                                    <TextView
+                                        android:id="@+id/error_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/spacing_large"
+                                        android:text="An error occurred. "
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                                        android:textColor="@color/grey_60" />
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/error_brief"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/spacing_medium"
+                                        android:text="Please try again later."
+                                        android:textAlignment="center"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                        android:textColor="@color/grey_40" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Sent"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
-
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10 jan 2021 11:20"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_40" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text=" KES 10,615"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                                    android:textColor="@color/light_blue_500" />
-
+                                </LinearLayout>
 
                             </LinearLayout>
 
-                        </LinearLayout>
+                        </androidx.core.widget.NestedScrollView>
 
-                    </androidx.cardview.widget.CardView>
+                    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
                     <View
                         android:layout_width="match_parent"

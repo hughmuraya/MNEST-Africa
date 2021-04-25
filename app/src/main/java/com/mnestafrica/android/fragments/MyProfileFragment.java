@@ -71,6 +71,8 @@ public class MyProfileFragment extends Fragment {
     @BindView(R.id.btn_update_profile)
     MaterialButton btn_update_profile;
 
+    @BindView(R.id.tv_current_unit)
+    MaterialTextView tv_current_unit;
 
     public void onAttach(Context ctx) {
         super.onAttach(ctx);
@@ -93,6 +95,7 @@ public class MyProfileFragment extends Fragment {
         loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
 
         loadCurrentUser();
+        loadCurrentUnit();
 
         btn_update_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +105,6 @@ public class MyProfileFragment extends Fragment {
         });
 
         return root;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     private void loadCurrentUser(){
@@ -139,15 +136,15 @@ public class MyProfileFragment extends Fragment {
 
                             JSONObject myProfile = response.has("profile") ? response.getJSONObject("profile") : null ;
 
-                                int idp = myProfile.has("id") ? myProfile.getInt("id") : 0;
-                                String  uuid = response.has("uuid") ? response.getString("uuid") : "" ;
-                                String first_name = myProfile.has("first_name") ? myProfile.getString("first_name") : "";
-                                String last_name = myProfile.has("last_name") ? myProfile.getString("last_name") : "";
-                                String id_number = myProfile.has("id_number") ? myProfile.getString("id_number") : "";
-                                String phone_no = myProfile.has("msisdn") ? myProfile.getString("msisdn") : "";
-                                String terms_accepted = myProfile.has("terms_accepted") ? myProfile.getString("terms_accepted") : "";
-                                int hapokash = myProfile.has("hapokash") ? myProfile.getInt("hapokash") : 0;
-                                int user = myProfile.has("user") ? myProfile.getInt("user") : 0;
+                            int idp = myProfile.has("id") ? myProfile.getInt("id") : 0;
+                            String  uuid = response.has("uuid") ? response.getString("uuid") : "" ;
+                            String first_name = myProfile.has("first_name") ? myProfile.getString("first_name") : "";
+                            String last_name = myProfile.has("last_name") ? myProfile.getString("last_name") : "";
+                            String id_number = myProfile.has("id_number") ? myProfile.getString("id_number") : "";
+                            String phone_no = myProfile.has("msisdn") ? myProfile.getString("msisdn") : "";
+                            String terms_accepted = myProfile.has("terms_accepted") ? myProfile.getString("terms_accepted") : "";
+                            int hapokash = myProfile.has("hapokash") ? myProfile.getInt("hapokash") : 0;
+                            int user = myProfile.has("user") ? myProfile.getInt("user") : 0;
 
 
                             card_name.setText(first_name+" "+last_name);
@@ -212,18 +209,22 @@ public class MyProfileFragment extends Fragment {
 
                         try {
 
-                            String  errors = response.has("error") ? response.getString("error") : "" ;
+                            boolean  status = response.has("success") && response.getBoolean("success");
+                            String error = response.has("error") ? response.getString("error") : "";
+                            String message = response.has("message") ? response.getString("message") : "";
 
 
-                            if (response.has("id")){
+                            if (status){
 
                                 NavHostFragment.findNavController(MyProfileFragment.this).navigate(R.id.nav_menu_home);
-                                Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
                             }
-                            else{
-
-                                Toast.makeText(context, errors, Toast.LENGTH_SHORT).show();
+                            else if(!status) {
+                                Snackbar.make(root.findViewById(R.id.frag_my_profile), message, Snackbar.LENGTH_LONG).show();
+                            }
+                            else {
+                                Snackbar.make(root.findViewById(R.id.frag_my_profile), error, Snackbar.LENGTH_LONG).show();
 
                             }
 
@@ -243,5 +244,87 @@ public class MyProfileFragment extends Fragment {
                 });
 
     }
+
+    private void loadCurrentUnit(){
+
+        String auth_token = loggedInUser.getAuth_token();
+
+
+        AndroidNetworking.get(Constants.ENDPOINT+Constants.CURRENT_UNIT)
+                .addHeaders("Authorization","Token "+ auth_token)
+                .addHeaders("Content-Type", "application.json")
+                .addHeaders("Accept", "*/*")
+                .addHeaders("Accept", "gzip, deflate, br")
+                .addHeaders("Connection","keep-alive")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+//                        Log.e(TAG, response.toString());
+
+                        try {
+
+                            boolean  status = response.has("success") && response.getBoolean("success");
+                            String error = response.has("error") ? response.getString("error") : "";
+                            String message = response.has("message") ? response.getString("message") : "";
+
+                            if (status){
+
+                                JSONObject data = response.has("data") ? response.getJSONObject("data") : null ;
+
+                                int id = data.has("id") ? data.getInt("id") : 0;
+
+                                JSONObject curr_unit = data.has("curr_unit") ? data.getJSONObject("curr_unit") : null ;
+
+                                int idu = curr_unit.has("id") ? curr_unit.getInt("id") : 0;
+                                String  uuid = curr_unit.has("uuid") ? curr_unit.getString("uuid") : "" ;
+                                String  unit_name = curr_unit.has("unit_name") ? curr_unit.getString("unit_name") : "" ;
+                                String  type_of_unit = curr_unit.has("type_of_unit") ? curr_unit.getString("type_of_unit") : "" ;
+                                String  property = curr_unit.has("property") ? curr_unit.getString("property") : "" ;
+
+
+                                String  start_date = data.has("start_date") ? data.getString("start_date") : "" ;
+                                int tenant = data.has("tenant") ? data.getInt("tenant") : 0;
+
+                                tv_current_unit.setText(property);
+
+                            }
+                            else {
+
+                                Snackbar.make(root.findViewById(R.id.frag_my_profile), message, Snackbar.LENGTH_LONG).show();
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+//                        Log.e(TAG, error.getErrorBody());
+
+                        Snackbar.make(root.findViewById(R.id.frag_my_profile), "Error: " + error.getErrorBody(), Snackbar.LENGTH_LONG).show();
+
+
+
+
+                    }
+                });
+
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+
 
 }

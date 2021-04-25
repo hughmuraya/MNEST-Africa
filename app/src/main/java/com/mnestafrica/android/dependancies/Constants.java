@@ -18,9 +18,10 @@ public class Constants {
     //PROPERTY DETAILS
     public static String CURRENT_UNIT = "api/tenant/current";
     public static String PREVIOUS_UNITS = "api/tenant/previous";
+    public static String VACATE_UNIT = "api/tenant/vacate";
     public static String VACANT_UNITS = "api/vacant/within";
     public static String VACANT_APARTMENTS = "api/vacant";
-    public static String VACATE_UNIT = "api/tenant/vacate";
+
 
     //WALLET
     public static String WALLET_DETAILS = "api/wallet/details";

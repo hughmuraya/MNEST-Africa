@@ -51,4 +51,7 @@ dependencies {
 
     //Android-networking
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
+
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 }
