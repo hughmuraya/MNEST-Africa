@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frag_wallet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -82,16 +83,6 @@
 
                             </LinearLayout>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="Wallet ID: 1234567890"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/light_blue_50"
-                                app:fontFamily="sans-serif-medium"
-                                android:visibility="gone"/>
-
 
                             <View
                                 android:layout_width="0dp"
@@ -109,7 +100,7 @@
                                 android:id="@+id/tv_wallet"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="24,561"
+                                android:text="KES 0"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
                                 android:textColor="@android:color/white"
                                 app:fontFamily="sans-serif-medium" />
@@ -123,9 +114,10 @@
                                 android:visibility="gone"/>
 
                             <TextView
+                                android:id="@+id/tv_wallet_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Kenyan Shillings (KES)"
+                                android:text="Wallet ID: 0"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                                 android:textColor="@color/light_blue_100" />
 

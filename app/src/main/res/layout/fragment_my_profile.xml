@@ -207,7 +207,6 @@
                                 android:id="@+id/etxt_first_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-
                                 android:inputType="text"
                                 android:hint="First Name"/>
                         </com.google.android.material.textfield.TextInputLayout>
@@ -234,18 +233,34 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/spacing_medium"
                             app:endIconMode="clear_text"
-                            android:visibility="gone"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etxt_phone_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                style="@style/EditText.Flat.Grey"
                                 android:inputType="phone"
-                                android:hint="Phone Number"
-                                />
+                                android:hint="Phone Number" />
+
                         </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_id_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/spacing_medium"
+                            app:endIconMode="clear_text"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etxt_id_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:hint="ID Number" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/til_email"
@@ -261,9 +276,8 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="textEmailAddress"
                                 android:hint="Email address"/>
+
                         </com.google.android.material.textfield.TextInputLayout>
-
-
 
                     </LinearLayout>
 
