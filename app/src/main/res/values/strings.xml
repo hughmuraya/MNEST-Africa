@@ -24,5 +24,9 @@
     <string name="current_apartment">Current Apartment</string>
     <string name="previous_apartments">Previous Apartments</string>
     <string name="vacate_apartment">Vacate Apartment</string>
-    <string name="view_open_units">View open units</string>
+    <string name="view_open_units">View Open Units</string>
+    <string name="cancel">Cancel</string>
+    <string name="vacate">Vacate</string>
+    <string name="pay_rent">Pay Rent</string>
+    <string name="pay_invoice">Pay Invoice</string>
 </resources>

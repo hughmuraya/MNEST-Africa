@@ -20,8 +20,10 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.fxn.stash.Stash;
 import com.google.android.material.snackbar.Snackbar;
 import com.mnestafrica.android.R;
+import com.mnestafrica.android.adapters.OpenUnitAdapter;
 import com.mnestafrica.android.adapters.WalletTransactionAdapter;
 import com.mnestafrica.android.dependancies.Constants;
+import com.mnestafrica.android.models.OpenUnit;
 import com.mnestafrica.android.models.WalletTransaction;
 import com.mnestafrica.android.models.auth;
 
@@ -35,8 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
-public class PreviousApartmentsFragment extends Fragment {
+public class ViewOpenUnitFragment extends Fragment {
 
     private Unbinder unbinder;
     private View root;
@@ -44,8 +45,8 @@ public class PreviousApartmentsFragment extends Fragment {
 
     private auth loggedInUser;
 
-    private WalletTransactionAdapter mAdapter;
-    private ArrayList<WalletTransaction> walletTransactionArrayList;
+    private OpenUnitAdapter mAdapter;
+    private ArrayList<OpenUnit> openUnitArrayList;
 
     @BindView(R.id.shimmer_my_container)
     ShimmerFrameLayout shimmer_my_container;
@@ -53,8 +54,8 @@ public class PreviousApartmentsFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    @BindView(R.id.no_previous_apartment_lyt)
-    LinearLayout no_previous_apartment_lyt;
+    @BindView(R.id.no_open_unit_lyt)
+    LinearLayout no_open_unit_lyt;
 
     @BindView(R.id.error_lyt)
     LinearLayout error_lyt;
@@ -76,13 +77,15 @@ public class PreviousApartmentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_previous_apartments, container, false);
+        root = inflater.inflate(R.layout.fragment_view_open_unit, container, false);
         unbinder = ButterKnife.bind(this, root);
 
         loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
 
-        walletTransactionArrayList = new ArrayList<>();
-        mAdapter = new WalletTransactionAdapter(context, walletTransactionArrayList);
+        loadOpenUnits();
+
+        openUnitArrayList = new ArrayList<>();
+        mAdapter = new OpenUnitAdapter(context, openUnitArrayList);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false));
@@ -91,17 +94,16 @@ public class PreviousApartmentsFragment extends Fragment {
         //set data and list adapter
         recyclerView.setAdapter(mAdapter);
 
-        loadPreviousApartments();
 
         return root;
     }
 
-    private void loadPreviousApartments(){
+    private void loadOpenUnits(){
 
         String auth_token = loggedInUser.getAuth_token();
 
 
-        AndroidNetworking.get(Constants.ENDPOINT+Constants.PREVIOUS_UNITS)
+        AndroidNetworking.get(Constants.ENDPOINT+Constants.VACANT_UNITS)
                 .addHeaders("Authorization","Token "+ auth_token)
                 .addHeaders("Content-Type", "application.json")
                 .addHeaders("Accept", "*/*")
@@ -115,7 +117,7 @@ public class PreviousApartmentsFragment extends Fragment {
                         // do anything with response
 //                        Log.e(TAG, response.toString());
 
-                        walletTransactionArrayList.clear();
+                        openUnitArrayList.clear();
 
                         if (recyclerView!=null)
                             recyclerView.setVisibility(View.VISIBLE);
@@ -141,29 +143,25 @@ public class PreviousApartmentsFragment extends Fragment {
 
                                     for (int i = 0; i < myArray.length(); i++) {
 
-                                        /*JSONObject item = (JSONObject) myArray.get(i);
+                                        JSONObject item = (JSONObject) myArray.get(i);
 
                                         int id = item.has("id") ? item.getInt("id") : 0;
-                                        int wallet_id = item.has("wallet_id") ? item.getInt("wallet_id") : 0;
-                                        String amount = item.has("amount") ? item.getString("amount") : "";
-                                        String previous_balance = item.has("previous_balance") ? item.getString("previous_balance") : "";
-                                        String transaction_type = item.has("transaction_type") ? item.getString("transaction_type") : "";
-                                        String source = item.has("source") ? item.getString("source") : "";
-                                        String trx_id = item.has("trx_id") ? item.getString("trx_id") : "";
-                                        String narration = item.has("narration") ? item.getString("narration") : "";
-                                        String created_at = item.has("created_at") ? item.getString("created_at") : "";
-                                        String updated_at = item.has("updated_at") ? item.getString("updated_at") : "";
+                                        String uuid = item.has("uuid") ? item.getString("uuid") : "";
+                                        String unit_name = item.has("unit_name") ? item.getString("unit_name") : "";
+                                        String value = item.has("value") ? item.getString("value") : "";
+                                        String floor = item.has("floor") ? item.getString("floor") : "";
+                                        String size = item.has("size") ? item.getString("size") : "";
 
-                                        WalletTransaction newWalletTransaction = new WalletTransaction(id,wallet_id,amount,previous_balance,transaction_type,source,trx_id,narration,created_at,updated_at);
+                                        OpenUnit newOpenUnit = new OpenUnit(id,uuid,unit_name,value,floor,size);
 
-                                        walletTransactionArrayList.add(newWalletTransaction);
-                                        mAdapter.notifyDataSetChanged();*/
+                                        openUnitArrayList.add(newOpenUnit);
+                                        mAdapter.notifyDataSetChanged();
 
                                     }
 
                                 }else {
                                     //not data found
-                                    no_previous_apartment_lyt.setVisibility(View.VISIBLE);
+                                    no_open_unit_lyt.setVisibility(View.VISIBLE);
 
 
                                 }
@@ -171,7 +169,7 @@ public class PreviousApartmentsFragment extends Fragment {
                             }
                             else {
 
-                                Snackbar.make(root.findViewById(R.id.frag_previous_apartments), message, Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(root.findViewById(R.id.frag_open_units), message, Snackbar.LENGTH_LONG).show();
 
                             }
 
@@ -197,12 +195,12 @@ public class PreviousApartmentsFragment extends Fragment {
 
                         if (error.getErrorCode() == 0){
 
-                            no_previous_apartment_lyt.setVisibility(View.VISIBLE);
+                            no_open_unit_lyt.setVisibility(View.VISIBLE);
                         }
                         else {
 
                             error_lyt.setVisibility(View.VISIBLE);
-                            Snackbar.make(root.findViewById(R.id.frag_previous_apartments), "Error: " + error.getErrorBody(), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(root.findViewById(R.id.frag_open_units), "Error: " + error.getErrorBody(), Snackbar.LENGTH_LONG).show();
 
                         }
 

@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_my_profile" />
     <fragment
         android:id="@+id/nav_menu_wallet"
-        android:name="com.mnestafrica.android.fragments.WalletFragment"
+        android:name="com.mnestafrica.android.fragments.wallet.WalletFragment"
         android:label="@string/menu_wallet"
         tools:layout="@layout/fragment_wallet" />
     <fragment
@@ -35,5 +35,20 @@
         android:name="com.mnestafrica.android.fragments.myapartment.PreviousApartmentsFragment"
         android:label="@string/previous_apartments"
         tools:layout="@layout/fragment_previous_apartments" />
+    <fragment
+        android:id="@+id/nav_view_open_unit"
+        android:name="com.mnestafrica.android.fragments.myapartment.ViewOpenUnitFragment"
+        android:label="@string/view_open_units"
+        tools:layout="@layout/fragment_view_open_unit" />
+    <fragment
+        android:id="@+id/nav_pay_invoice"
+        android:name="com.mnestafrica.android.fragments.wallet.PayInvoiceFragment"
+        android:label="@string/pay_invoice"
+        tools:layout="@layout/fragment_pay_invoice" />
+    <fragment
+        android:id="@+id/nav_pay_rent"
+        android:name="com.mnestafrica.android.fragments.wallet.PayRentFragment"
+        android:label="@string/pay_rent"
+        tools:layout="@layout/fragment_pay_rent" />
 
 </navigation>

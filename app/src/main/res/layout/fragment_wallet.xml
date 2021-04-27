@@ -140,6 +140,7 @@
                         android:orientation="horizontal">
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/card_pay_rent"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -187,6 +188,7 @@
                             android:layout_height="0dp" />
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/card_pay_invoice"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -236,6 +238,7 @@
                         android:orientation="horizontal">
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/card_send"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -282,6 +285,7 @@
                             android:layout_height="0dp" />
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/card_pay_top_up"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

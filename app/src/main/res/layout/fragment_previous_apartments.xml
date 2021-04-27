@@ -64,135 +64,137 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true">
-
-        <LinearLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_lyt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/spacing_large">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="1dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_my_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    shimmer:duration="800">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_my_home" />
+                    <LinearLayout
+                        android:id="@+id/shimmerInnerLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-            </RelativeLayout>
+                        <include layout="@layout/placeholder_item" />
 
-            <View
-                android:layout_width="@dimen/spacing_middle"
-                android:layout_height="0dp" />
+                    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/actionBarSize"
+                    android:scrollbars="vertical"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:visibility="gone"
+                    android:scrollingCache="true" />
+
+            </FrameLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Le Mac Apartments, Westlands"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:id="@+id/no_previous_apartment_lyt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:paddingBottom="80dp"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Move In Date: 25/01/2020"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/grey_40" />
+                        <ImageView
+                            android:id="@+id/lab_image"
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
+                            android:src="@drawable/ic_my_home" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Move Out Date: 25/02/2021"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/grey_40" />
+                        <TextView
+                            android:id="@+id/no_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_large"
+                            android:text="No Previous Apartments found."
+                            android:textAlignment="center"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/no_brief"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text="Previous Apartments will appear here."
+                            android:textAlignment="center"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
-        </LinearLayout>
+                    </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+                    <LinearLayout
+                        android:id="@+id/error_lyt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:paddingBottom="80dp"
+                        android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true">
+                        <ImageView
+                            android:id="@+id/error_img"
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
+                            android:src="@drawable/ic_error" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/spacing_large">
+                        <TextView
+                            android:id="@+id/error_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_large"
+                            android:text="An error occurred. "
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                            android:textColor="@color/grey_60" />
 
-            <RelativeLayout
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="1dp">
+                        <TextView
+                            android:id="@+id/error_brief"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text="Please try again later."
+                            android:textAlignment="center"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/grey_40" />
 
+                    </LinearLayout>
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_my_home" />
+                </LinearLayout>
 
-            </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
 
-            <View
-                android:layout_width="@dimen/spacing_middle"
-                android:layout_height="0dp" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Oasis Apartments, Kilimani"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Move In Date: 25/01/2019"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/grey_40" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Move Out Date: 25/01/2020"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/grey_40" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

@@ -1,8 +1,9 @@
-package com.mnestafrica.android.fragments;
+package com.mnestafrica.android.fragments.wallet;
 
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.mnestafrica.android.R;
 import com.mnestafrica.android.adapters.WalletTransactionAdapter;
 import com.mnestafrica.android.dependancies.Constants;
+import com.mnestafrica.android.fragments.HomeFragment;
 import com.mnestafrica.android.models.WalletTransaction;
 import com.mnestafrica.android.models.auth;
 
@@ -50,6 +52,18 @@ public class WalletFragment extends Fragment {
 
     private WalletTransactionAdapter mAdapter;
     private ArrayList<WalletTransaction> walletTransactionArrayList;
+
+    @BindView(R.id.card_pay_rent)
+    CardView card_pay_rent;
+
+    @BindView(R.id.card_pay_invoice)
+    CardView card_pay_invoice;
+
+    @BindView(R.id.card_send)
+    CardView card_send;
+
+    @BindView(R.id.card_pay_top_up)
+    CardView card_pay_top_up;
 
     @BindView(R.id.shimmer_my_container)
     ShimmerFrameLayout shimmer_my_container;
@@ -98,6 +112,8 @@ public class WalletFragment extends Fragment {
 
         loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
 
+        initialise();
+
         walletTransactionArrayList = new ArrayList<>();
         mAdapter = new WalletTransactionAdapter(context, walletTransactionArrayList);
 
@@ -110,6 +126,12 @@ public class WalletFragment extends Fragment {
 
         loadWalletDetails();
         loadWalletTransactions();
+
+
+        return root;
+    }
+
+    private void initialise(){
 
         hide_balance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +157,43 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        return root;
+        card_pay_rent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NavHostFragment.findNavController(WalletFragment.this).navigate(R.id.nav_pay_rent);
+
+            }
+        });
+
+        card_pay_invoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NavHostFragment.findNavController(WalletFragment.this).navigate(R.id.nav_pay_invoice);
+
+            }
+        });
+
+        card_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(context, "Send Money coming soon!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        card_pay_top_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(context, "Top up coming soon!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
     private void loadWalletDetails(){
