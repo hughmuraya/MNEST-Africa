@@ -93,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
+                    android:focusable="false"
                     android:hint="Date"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,8 +146,6 @@
                     android:hint="Reason"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,7 +170,6 @@
                     android:hint="Phone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -185,7 +183,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/spacing_middle"
+        android:paddingBottom="@dimen/spacing_middle"
+        >
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
@@ -205,9 +206,12 @@
             android:layout_marginHorizontal="@dimen/spacing_middle"
             android:text="@string/vacate"
             android:textColor="@android:color/white"
-            android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textAlignment="center" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="@dimen/spacing_large"
+        android:layout_height="0dp" />
 
 </LinearLayout>

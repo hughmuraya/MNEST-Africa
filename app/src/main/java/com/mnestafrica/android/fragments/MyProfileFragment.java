@@ -68,11 +68,14 @@ public class MyProfileFragment extends Fragment {
     @BindView(R.id.etxt_email)
     TextInputEditText etxt_email;
 
-    @BindView(R.id.btn_update_profile)
-    MaterialButton btn_update_profile;
-
     @BindView(R.id.tv_current_unit)
     MaterialTextView tv_current_unit;
+
+    @BindView(R.id.tv_current_agent)
+    MaterialTextView tv_current_agent;
+
+    @BindView(R.id.btn_update_profile)
+    MaterialButton btn_update_profile;
 
     public void onAttach(Context ctx) {
         super.onAttach(ctx);
@@ -147,6 +150,10 @@ public class MyProfileFragment extends Fragment {
                             int user = myProfile.has("user") ? myProfile.getInt("user") : 0;
 
 
+                            String  agent = response.has("agent") ? response.getString("agent") : "" ;
+
+
+
                             card_name.setText(first_name+" "+last_name);
                             card_phone.setText(phone_no);
                             card_wallet_id.setText(String.valueOf(hapokash));
@@ -156,6 +163,8 @@ public class MyProfileFragment extends Fragment {
                             etxt_phone.setText(phone_no);
                             etxt_id_no.setText(id_number);
                             etxt_email.setText(email);
+
+                            tv_current_agent.setText(agent);
 
 
                         } catch (JSONException e) {

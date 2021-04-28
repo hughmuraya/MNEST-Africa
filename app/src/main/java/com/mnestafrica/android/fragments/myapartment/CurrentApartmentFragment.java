@@ -259,7 +259,7 @@ public class CurrentApartmentFragment extends Fragment {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         reason = (TextInputEditText) dialog.findViewById(R.id.etxt_reason);
         dateVacate = (TextInputEditText) dialog.findViewById(R.id.etxt_date_vacate);
