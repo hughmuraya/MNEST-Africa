@@ -149,10 +149,13 @@ public class ViewOpenUnitFragment extends Fragment {
                                         String uuid = item.has("uuid") ? item.getString("uuid") : "";
                                         String unit_name = item.has("unit_name") ? item.getString("unit_name") : "";
                                         String value = item.has("value") ? item.getString("value") : "";
+                                        String service_charge = item.has("service_charge") ? item.getString("service_charge") : "";
                                         String floor = item.has("floor") ? item.getString("floor") : "";
                                         String size = item.has("size") ? item.getString("size") : "";
+                                        String security_deposit = item.has("security_deposit") ? item.getString("security_deposit") : "";
 
-                                        OpenUnit newOpenUnit = new OpenUnit(id,uuid,unit_name,value,floor,size);
+
+                                        OpenUnit newOpenUnit = new OpenUnit(id,uuid,unit_name,value,service_charge,floor,size,security_deposit);
 
                                         openUnitArrayList.add(newOpenUnit);
                                         mAdapter.notifyDataSetChanged();

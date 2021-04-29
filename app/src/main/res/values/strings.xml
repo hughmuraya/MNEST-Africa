@@ -29,4 +29,7 @@
     <string name="vacate">Vacate</string>
     <string name="pay_rent">Pay Rent</string>
     <string name="pay_invoice">Pay Invoice</string>
+    <string name="enquire">Enquire</string>
+    <string name="top_up">Top Up</string>
+    <string name="withdraw">Withdraw</string>
 </resources>

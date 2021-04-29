@@ -111,7 +111,7 @@
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                                 android:textStyle="bold"
                                 app:fontFamily="sans-serif-medium"
-                                android:text="Alex Another"/>
+                                android:text=""/>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                    android:text="0720000000"/>
+                                    android:text=""/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -154,7 +154,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                    android:text="1234567890"/>
+                                    android:text=""/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -390,7 +390,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_middle"
                     android:text="@string/update_profile"
-                    android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="18sp" />
 

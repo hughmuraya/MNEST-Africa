@@ -23,12 +23,14 @@ public class Constants {
     public static String VACATE_UNIT = "api/tenant/vacate";
     public static String VACANT_UNITS = "api/vacant/within";
     public static String VACANT_APARTMENTS = "api/vacant";
+    public static String ENQUIRE_UNIT = "api/vacancy/enquire";
 
 
     //WALLET
     public static String WALLET_DETAILS = "api/wallet/details";
     public static String WALLET_TRANSACTIONS = "api/wallet/trans";
     public static String WALLET_TOP_UP = "api/wallet/mpesa/stktopup";
+    public static String WALLET_WITHDRAW = "api/wallet/mpesa/withdraw";
     public static String PAY_RENT = "api/inv_pay/wallet";
     public static String PAY_INVOICE = "api/inv_pay/wallet";
 

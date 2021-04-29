@@ -50,5 +50,10 @@
         android:name="com.mnestafrica.android.fragments.wallet.PayRentFragment"
         android:label="@string/pay_rent"
         tools:layout="@layout/fragment_pay_rent" />
+    <fragment
+        android:id="@+id/nav_find_apartment"
+        android:name="com.mnestafrica.android.fragments.FindApartmentFragment"
+        android:label="@string/find_apartment"
+        tools:layout="@layout/fragment_find_apartment" />
 
 </navigation>

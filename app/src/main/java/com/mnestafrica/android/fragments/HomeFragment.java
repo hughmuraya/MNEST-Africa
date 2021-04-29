@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "Find Apartment coming soon!", Toast.LENGTH_SHORT).show();
+                NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.nav_find_apartment);
 
             }
         });

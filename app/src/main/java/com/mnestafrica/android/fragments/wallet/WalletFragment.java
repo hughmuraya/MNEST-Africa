@@ -1,5 +1,6 @@
 package com.mnestafrica.android.fragments.wallet;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -9,9 +10,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,11 +27,12 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.fxn.stash.Stash;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.mnestafrica.android.R;
 import com.mnestafrica.android.adapters.WalletTransactionAdapter;
 import com.mnestafrica.android.dependancies.Constants;
-import com.mnestafrica.android.fragments.HomeFragment;
 import com.mnestafrica.android.models.WalletTransaction;
 import com.mnestafrica.android.models.auth;
 
@@ -41,6 +46,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.mnestafrica.android.dependancies.AppController.TAG;
+
 
 public class WalletFragment extends Fragment {
 
@@ -49,6 +56,9 @@ public class WalletFragment extends Fragment {
     private Context context;
 
     private auth loggedInUser;
+
+    private TextInputEditText amount;
+    private TextInputEditText phone;
 
     private WalletTransactionAdapter mAdapter;
     private ArrayList<WalletTransaction> walletTransactionArrayList;
@@ -179,7 +189,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "Send Money coming soon!", Toast.LENGTH_SHORT).show();
+               withdrawDialog();
 
             }
         });
@@ -188,7 +198,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "Top up coming soon!", Toast.LENGTH_SHORT).show();
+                topUpDialog();
 
             }
         });
@@ -374,6 +384,222 @@ public class WalletFragment extends Fragment {
                     }
                 });
 
+    }
+
+    private void topUpDialog() {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_top_up);
+        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        amount = (TextInputEditText) dialog.findViewById(R.id.etxt_amount);
+        phone = (TextInputEditText) dialog.findViewById(R.id.etxt_phone);
+
+
+
+        ((ImageButton) dialog.findViewById(R.id.bt_close)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ((MaterialButton) dialog.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ((MaterialButton) dialog.findViewById(R.id.btn_top_up)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+                    jsonObject.put("amount", amount.getText().toString());
+                    jsonObject.put("mobile", phone.getText().toString());
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                String auth_token = loggedInUser.getAuth_token();
+
+                AndroidNetworking.post(Constants.ENDPOINT+Constants.WALLET_TOP_UP)
+                        .addHeaders("Authorization","Token "+ auth_token)
+                        .addHeaders("Accept", "*/*")
+                        .addHeaders("Accept", "gzip, deflate, br")
+                        .addHeaders("Connection","keep-alive")
+                        .setContentType("application.json")
+                        .addJSONObjectBody(jsonObject) // posting json
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener(){
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.e(TAG, response.toString());
+
+                                try {
+
+                                    boolean  status = response.has("success") && response.getBoolean("success");
+                                    String error = response.has("error") ? response.getString("error") : "";
+                                    String message = response.has("message") ? response.getString("message") : "";
+
+
+                                    if (status){
+
+                                        dialog.dismiss();
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else if(!status) {
+
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else {
+
+                                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(ANError error) {
+                                // handle error
+                                Log.e(TAG, error.getErrorBody());
+                                Toast.makeText(context, "Error: "+error.getErrorBody(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+            }
+        });
+
+
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+    }
+
+    private void withdrawDialog() {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_send_mpesa);
+        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        amount = (TextInputEditText) dialog.findViewById(R.id.etxt_withdraw_amount);
+        phone = (TextInputEditText) dialog.findViewById(R.id.etxt_withdraw_phone);
+
+
+
+        ((ImageButton) dialog.findViewById(R.id.bt_close)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ((MaterialButton) dialog.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ((MaterialButton) dialog.findViewById(R.id.btn_withdraw)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+                    jsonObject.put("amount", amount.getText().toString());
+                    jsonObject.put("mobile", phone.getText().toString());
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                String auth_token = loggedInUser.getAuth_token();
+
+                AndroidNetworking.post(Constants.ENDPOINT+Constants.WALLET_WITHDRAW)
+                        .addHeaders("Authorization","Token "+ auth_token)
+                        .addHeaders("Accept", "*/*")
+                        .addHeaders("Accept", "gzip, deflate, br")
+                        .addHeaders("Connection","keep-alive")
+                        .setContentType("application.json")
+                        .addJSONObjectBody(jsonObject) // posting json
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener(){
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.e(TAG, response.toString());
+
+                                try {
+
+                                    boolean  status = response.has("success") && response.getBoolean("success");
+                                    String error = response.has("error") ? response.getString("error") : "";
+                                    String message = response.has("message") ? response.getString("message") : "";
+
+
+                                    if (status){
+
+                                        dialog.dismiss();
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else if(!status) {
+
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else {
+
+                                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(ANError error) {
+                                // handle error
+                                Log.e(TAG, error.getErrorBody());
+                                Toast.makeText(context, "Error: "+error.getErrorBody(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+            }
+        });
+
+
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
     }
 
     @Override
