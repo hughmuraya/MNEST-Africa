@@ -19,7 +19,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.mnestafrica.android.R;
 import com.mnestafrica.android.dependancies.Constants;
+import com.mnestafrica.android.fragments.settings.SettingsFragment;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -226,7 +229,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_settings:
-                Snackbar.make(findViewById(R.id.drawer_layout),"Settings page coming soon",Snackbar.LENGTH_LONG).show();
+
+                NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
+                navController.navigateUp();
+                navController.navigate(R.id.nav_settings);
+
+//                Snackbar.make(findViewById(R.id.drawer_layout),"Settings page coming soon",Snackbar.LENGTH_LONG).show();
                 break;
 
             default:

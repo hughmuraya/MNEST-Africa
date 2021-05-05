@@ -55,5 +55,25 @@
         android:name="com.mnestafrica.android.fragments.FindApartmentFragment"
         android:label="@string/find_apartment"
         tools:layout="@layout/fragment_find_apartment" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.mnestafrica.android.fragments.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_about_app"
+        android:name="com.mnestafrica.android.fragments.settings.AboutAppFragment"
+        android:label="@string/about_app"
+        tools:layout="@layout/fragment_about_app" />
+    <fragment
+        android:id="@+id/nav_terms"
+        android:name="com.mnestafrica.android.fragments.settings.TermsFragment"
+        android:label="@string/terms"
+        tools:layout="@layout/fragment_terms" />
+    <fragment
+        android:id="@+id/nav_privacy"
+        android:name="com.mnestafrica.android.fragments.settings.PrivacyFragment"
+        android:label="@string/privacy"
+        tools:layout="@layout/fragment_privacy" />
 
 </navigation>

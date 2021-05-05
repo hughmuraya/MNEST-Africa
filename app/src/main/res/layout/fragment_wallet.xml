@@ -67,6 +67,13 @@
                                     app:fontFamily="sans-serif-medium" />
 
                                 <ImageButton
+                                    android:id="@+id/btn_refresh_balance"
+                                    android:layout_width="@dimen/spacing_xmlarge"
+                                    android:layout_height="@dimen/spacing_xmlarge"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:src="@drawable/ic_refresh" />
+
+                                <ImageButton
                                     android:id="@+id/btn_hide_balance"
                                     android:layout_width="@dimen/spacing_xmlarge"
                                     android:layout_height="@dimen/spacing_xmlarge"
@@ -330,16 +337,34 @@
 
                     </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_middle"
-                        android:layout_marginBottom="@dimen/spacing_medium"
-                        android:gravity="center"
-                        android:text="@string/transactions"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/grey_40"
-                        app:fontFamily="sans-serif-medium" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="@dimen/spacing_middle"
+                            android:layout_marginBottom="@dimen/spacing_medium"
+                            android:gravity="center"
+                            android:text="@string/transactions"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_40"
+                            app:fontFamily="sans-serif-medium" />
+
+                        <ImageButton
+                            android:id="@+id/btn_refresh_transaction"
+                            android:layout_width="@dimen/spacing_xmlarge"
+                            android:layout_height="@dimen/spacing_xmlarge"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_refresh" />
+
+
+                    </LinearLayout>
+
+
 
                     <androidx.coordinatorlayout.widget.CoordinatorLayout
                         android:id="@+id/coordinator_lyt"

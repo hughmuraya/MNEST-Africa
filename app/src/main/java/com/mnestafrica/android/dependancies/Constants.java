@@ -41,4 +41,8 @@ public class Constants {
     public static String CLOSED_RENT = "api/rent_invoices/closed";
     public static String CLOSED_INVOICES = "api/invoices/closed";
 
+
+    //DOCUMENTS
+    public static String DOCUMENT = "api/documents/";
+
 }

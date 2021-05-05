@@ -1,8 +1,11 @@
 package com.mnestafrica.android.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -23,6 +26,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.mnestafrica.android.R;
+import com.mnestafrica.android.activities.SignInActivity;
 import com.mnestafrica.android.dependancies.Constants;
 import com.mnestafrica.android.models.OpenUnit;
 import com.mnestafrica.android.models.Property;
@@ -328,8 +332,29 @@ public class FindApartmentFragment extends Fragment {
 
                             if (status){
 
-                                NavHostFragment.findNavController(FindApartmentFragment.this).navigate(R.id.nav_menu_home);
-                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                AlertDialog.Builder builder= new AlertDialog.Builder(context);
+                                builder.setTitle("Success");
+                                builder.setIcon(R.drawable.ic_notified);
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        NavHostFragment.findNavController(FindApartmentFragment.this).navigate(R.id.nav_menu_home);
+
+                                    }
+                                });
+                                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setMessage(message);
+                                AlertDialog alert = builder.create();
+                                alert.show();
+
+
 
                             }
                             else if(!status) {

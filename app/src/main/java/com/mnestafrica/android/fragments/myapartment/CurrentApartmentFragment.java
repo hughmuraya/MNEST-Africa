@@ -3,10 +3,14 @@ package com.mnestafrica.android.fragments.myapartment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -31,8 +35,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mnestafrica.android.R;
+import com.mnestafrica.android.adapters.LeaseAgreementAdapter;
+import com.mnestafrica.android.adapters.OpenUnitAdapter;
 import com.mnestafrica.android.dependancies.Constants;
 import com.mnestafrica.android.fragments.MyProfileFragment;
+import com.mnestafrica.android.models.LeaseAgreement;
+import com.mnestafrica.android.models.OpenUnit;
 import com.mnestafrica.android.models.auth;
 
 import org.json.JSONArray;
@@ -40,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -59,6 +68,9 @@ public class CurrentApartmentFragment extends Fragment {
 
     private auth loggedInUser;
     private String SCHEDULE_DATE = "";
+
+    private LeaseAgreementAdapter mAdapter;
+    private ArrayList<LeaseAgreement> leaseAgreementArrayList;
 
     private TextInputEditText reason;
     private TextInputEditText dateVacate;
@@ -112,8 +124,20 @@ public class CurrentApartmentFragment extends Fragment {
 
         loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
 
-       loadOpenRent();
-       loadOpenInvoice();
+        leaseAgreementArrayList = new ArrayList<>();
+        mAdapter = new LeaseAgreementAdapter(context, leaseAgreementArrayList);
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false));
+        recyclerView.setHasFixedSize(true);
+
+        //set data and list adapter
+        recyclerView.setAdapter(mAdapter);
+
+        loadOpenRent();
+        loadOpenInvoice();
+        loadLeaseAgreement();
+
 
         btn_vacate_apartment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -354,8 +378,28 @@ public class CurrentApartmentFragment extends Fragment {
 
                                     if (status){
 
-                                        NavHostFragment.findNavController(CurrentApartmentFragment.this).navigate(R.id.nav_current_apartment);
-                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                        AlertDialog.Builder builder= new AlertDialog.Builder(context);
+                                        builder.setTitle("Success");
+                                        builder.setIcon(R.drawable.ic_notified);
+                                        builder.setCancelable(false);
+                                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                NavHostFragment.findNavController(CurrentApartmentFragment.this).navigate(R.id.nav_current_apartment);
+
+                                            }
+                                        });
+                                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.setMessage(message);
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
+
 
                                     }
                                     else if(!status) {
@@ -389,6 +433,109 @@ public class CurrentApartmentFragment extends Fragment {
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
+    }
+
+    private void loadLeaseAgreement(){
+
+        String auth_token = loggedInUser.getAuth_token();
+
+
+        AndroidNetworking.get(Constants.ENDPOINT+Constants.DOCUMENT)
+                .addHeaders("Authorization","Token "+ auth_token)
+                .addHeaders("Content-Type", "application.json")
+                .addHeaders("Accept", "*/*")
+                .addHeaders("Accept", "gzip, deflate, br")
+                .addHeaders("Connection","keep-alive")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+//                        Log.e(TAG, response.toString());
+
+                        leaseAgreementArrayList.clear();
+
+                        if (recyclerView!=null)
+                            recyclerView.setVisibility(View.VISIBLE);
+
+                        if (shimmer_my_container!=null){
+                            shimmer_my_container.stopShimmerAnimation();
+                            shimmer_my_container.setVisibility(View.GONE);
+                        }
+
+                        try {
+
+                            boolean  status = response.has("success") && response.getBoolean("success");
+                            String error = response.has("error") ? response.getString("error") : "";
+                            String message = response.has("message") ? response.getString("message") : "";
+
+                            if (status){
+
+                                JSONObject myObject = response.getJSONObject("data");
+
+                                if (myObject.length() > 0){
+
+
+                                    JSONObject item = (JSONObject) myObject.get("lease_agreement");
+
+                                    String unit = item.has("unit") ? item.getString("unit") : "";
+                                    String link = item.has("link") ? item.getString("link") : "";
+
+
+                                    LeaseAgreement newOpenUnit = new LeaseAgreement(unit,link);
+
+                                    leaseAgreementArrayList.add(newOpenUnit);
+                                    mAdapter.notifyDataSetChanged();
+
+                                }else {
+                                    //not data found
+                                    no_lease_lyt.setVisibility(View.VISIBLE);
+
+
+                                }
+
+                            }
+                            else {
+
+                                Snackbar.make(root.findViewById(R.id.frag_current_apartment), message, Snackbar.LENGTH_LONG).show();
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+//                        Log.e(TAG, error.getErrorBody());
+
+                        if (recyclerView!=null)
+                            recyclerView.setVisibility(View.VISIBLE);
+
+                        if (shimmer_my_container!=null){
+                            shimmer_my_container.stopShimmerAnimation();
+                            shimmer_my_container.setVisibility(View.GONE);
+                        }
+
+                        if (error.getErrorCode() == 0){
+
+                            no_lease_lyt.setVisibility(View.VISIBLE);
+                        }
+                        else {
+
+                            error_lyt.setVisibility(View.VISIBLE);
+                            Snackbar.make(root.findViewById(R.id.frag_current_apartment), "Error: " + error.getErrorBody(), Snackbar.LENGTH_LONG).show();
+
+                        }
+
+
+                    }
+                });
+
     }
 
     @Override

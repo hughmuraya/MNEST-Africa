@@ -1,25 +1,46 @@
 package com.mnestafrica.android.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.fxn.stash.Stash;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.mnestafrica.android.R;
+import com.mnestafrica.android.dependancies.Constants;
+import com.mnestafrica.android.fragments.FindApartmentFragment;
 import com.mnestafrica.android.models.OpenUnit;
 import com.mnestafrica.android.models.WalletTransaction;
+import com.mnestafrica.android.models.auth;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mnestafrica.android.dependancies.AppController.TAG;
+
 public class OpenUnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<OpenUnit> items = new ArrayList<>();
+
+    private auth loggedInUser;
+    private View root;
 
     private Context context;
     private OpenUnitAdapter.OnItemClickListener onItemClickListener;
@@ -80,8 +101,89 @@ public class OpenUnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(context, "Enquired about " + obj.getUnit_name(), Toast.LENGTH_SHORT).show();
+                    loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
 
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+
+                        jsonObject.put("uuid", obj.getUuid());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    String auth_token = loggedInUser.getAuth_token();
+
+                    AndroidNetworking.post(Constants.ENDPOINT+Constants.ENQUIRE_UNIT)
+                            .addHeaders("Authorization","Token "+ auth_token)
+                            .addHeaders("Accept", "*/*")
+                            .addHeaders("Accept", "gzip, deflate, br")
+                            .addHeaders("Connection","keep-alive")
+                            .setContentType("application.json")
+                            .addJSONObjectBody(jsonObject) // posting json
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener(){
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.e(TAG, response.toString());
+
+                                    try {
+
+                                        boolean  status = response.has("success") && response.getBoolean("success");
+                                        String error = response.has("error") ? response.getString("error") : "";
+                                        String message = response.has("message") ? response.getString("message") : "";
+
+
+                                        if (status){
+
+                                            AlertDialog.Builder builder= new AlertDialog.Builder(context);
+                                            builder.setTitle("Success");
+                                            builder.setIcon(R.drawable.ic_notified);
+                                            builder.setCancelable(false);
+                                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    Navigation.findNavController(v).navigate(R.id.nav_view_open_unit);
+                                                }
+                                            });
+                                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                            builder.setMessage(message);
+                                            AlertDialog alert = builder.create();
+                                            alert.show();
+
+
+                                        }
+                                        else if(!status) {
+
+                                            Snackbar.make(root.findViewById(R.id.frag_open_units), message, Snackbar.LENGTH_LONG).show();
+
+
+
+                                        }
+                                        else {
+
+                                            Snackbar.make(root.findViewById(R.id.frag_open_units), message, Snackbar.LENGTH_LONG).show();
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    // handle error
+                                    Log.e(TAG, error.getErrorBody());
+                                    Snackbar.make(root.findViewById(R.id.frag_open_units), "Error: "+error.getErrorBody(), Snackbar.LENGTH_LONG).show();
+                                }
+                            });
                 }
             });
 

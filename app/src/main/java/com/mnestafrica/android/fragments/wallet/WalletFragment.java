@@ -93,6 +93,12 @@ public class WalletFragment extends Fragment {
     @BindView(R.id.btn_show_balance)
     ImageButton show_balance;
 
+    @BindView(R.id.btn_refresh_balance)
+    ImageButton refresh_balance;
+
+    @BindView(R.id.btn_refresh_transaction)
+    ImageButton refresh_transactions;
+
     @BindView(R.id.tv_wallet)
     TextView tv_wallet_balance;
 
@@ -199,6 +205,24 @@ public class WalletFragment extends Fragment {
             public void onClick(View v) {
 
                 topUpDialog();
+
+            }
+        });
+
+        refresh_balance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadWalletDetails();
+
+            }
+        });
+
+        refresh_transactions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadWalletTransactions();
 
             }
         });
@@ -458,6 +482,8 @@ public class WalletFragment extends Fragment {
 
                                         dialog.dismiss();
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                        loadWalletDetails();
+                                        loadWalletTransactions();
 
                                     }
                                     else if(!status) {
@@ -566,6 +592,8 @@ public class WalletFragment extends Fragment {
 
                                         dialog.dismiss();
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                        loadWalletDetails();
+                                        loadWalletTransactions();
 
                                     }
                                     else if(!status) {

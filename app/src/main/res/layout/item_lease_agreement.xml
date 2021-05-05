@@ -35,37 +35,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Le Mac Apartments, Westlands"
+                android:text="Unit Number: "
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2" />
 
 
             <TextView
+                android:id="@+id/tv_unit_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Move In Date: 25/01/2020"
+                android:text="A1"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                 android:textColor="@color/grey_40" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hse No: B-12"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="@color/light_blue_500" />
-
 
         </LinearLayout>
 

@@ -20,4 +20,8 @@
     <string name="enquire">Enquire</string>
     <string name="top_up">Top Up</string>
     <string name="withdraw">Withdraw</string>
+    <string name="settings">Settings</string>
+    <string name="about_app">About App</string>
+    <string name="terms">Terms and Conditions</string>
+    <string name="privacy">Privacy Policy</string>
 </resources>
