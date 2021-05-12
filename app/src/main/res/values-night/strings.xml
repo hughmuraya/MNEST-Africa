@@ -24,4 +24,6 @@
     <string name="about_app">About App</string>
     <string name="terms">Terms and Conditions</string>
     <string name="privacy">Privacy Policy</string>
+    <string name="call">Call Agent</string>
+    <string name="email">Email Agent</string>
 </resources>

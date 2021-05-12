@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -149,7 +150,7 @@ public class WalletFragment extends Fragment {
 
     private void initialise(){
 
-        hide_balance.setOnClickListener(new View.OnClickListener() {
+        hide_balance.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -161,7 +162,7 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        show_balance.setOnClickListener(new View.OnClickListener() {
+        show_balance.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -173,7 +174,7 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        card_pay_rent.setOnClickListener(new View.OnClickListener() {
+        card_pay_rent.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -182,7 +183,7 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        card_pay_invoice.setOnClickListener(new View.OnClickListener() {
+        card_pay_invoice.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -191,7 +192,7 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        card_send.setOnClickListener(new View.OnClickListener() {
+        card_send.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -200,7 +201,7 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        card_pay_top_up.setOnClickListener(new View.OnClickListener() {
+        card_pay_top_up.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -209,18 +210,30 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        refresh_balance.setOnClickListener(new View.OnClickListener() {
+        refresh_balance.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 loadWalletDetails();
 
             }
         });
 
-        refresh_transactions.setOnClickListener(new View.OnClickListener() {
+        refresh_transactions.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                walletTransactionArrayList = new ArrayList<>();
+                mAdapter = new WalletTransactionAdapter(context, walletTransactionArrayList);
+
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false));
+                recyclerView.setHasFixedSize(true);
+
+                //set data and list adapter
+                recyclerView.setAdapter(mAdapter);
 
                 loadWalletTransactions();
 
@@ -426,21 +439,21 @@ public class WalletFragment extends Fragment {
 
 
 
-        ((ImageButton) dialog.findViewById(R.id.bt_close)).setOnClickListener(new View.OnClickListener() {
+        ((ImageButton) dialog.findViewById(R.id.bt_close)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        ((MaterialButton) dialog.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
+        ((MaterialButton) dialog.findViewById(R.id.btn_cancel)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        ((MaterialButton) dialog.findViewById(R.id.btn_top_up)).setOnClickListener(new View.OnClickListener() {
+        ((MaterialButton) dialog.findViewById(R.id.btn_top_up)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -536,21 +549,21 @@ public class WalletFragment extends Fragment {
 
 
 
-        ((ImageButton) dialog.findViewById(R.id.bt_close)).setOnClickListener(new View.OnClickListener() {
+        ((ImageButton) dialog.findViewById(R.id.bt_close)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        ((MaterialButton) dialog.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
+        ((MaterialButton) dialog.findViewById(R.id.btn_cancel)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        ((MaterialButton) dialog.findViewById(R.id.btn_withdraw)).setOnClickListener(new View.OnClickListener() {
+        ((MaterialButton) dialog.findViewById(R.id.btn_withdraw)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 

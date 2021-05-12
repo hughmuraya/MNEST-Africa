@@ -3,6 +3,7 @@
     package="com.mnestafrica.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,7 @@
         android:theme="@style/Theme.MNESTAfrica">
 
         <activity android:name=".activities.ResetPasswordActivity"
-            android:label="@string/reset_pass"/>
+            android:theme="@style/Theme.MNESTAfrica.NoActionBar"/>
 
         <activity android:name=".activities.SignInActivity"
             android:label="@string/sign_in" />

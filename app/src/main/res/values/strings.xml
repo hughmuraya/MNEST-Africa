@@ -66,4 +66,6 @@
     <string name="privacy_acceptance">"You acknowledge that you have read this Policy and agree to all its terms and conditions. By accessing and using the Website and Services you agree to be bound by this Policy. If you do not agree to abide by the terms of this Policy, you are not authorized to access or use the Website and Services. "</string>
     <string name="privacy_contacting_us">"If you would like to contact us to understand more about this Policy or wish to contact us concerning any matter relating to individual rights and your Personal Information, you may send an email to support@mnestafrica.com  This document was last updated on January 25, 2021 "</string>
     <string name="privacy">Privacy Policy</string>
+    <string name="call">Call Agent</string>
+    <string name="email">Email Agent</string>
 </resources>

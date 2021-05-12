@@ -1,11 +1,14 @@
 package com.mnestafrica.android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +34,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private TextInputEditText etxt_email;
     private MaterialButton reset_pass;
     private TextView sign_in;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Reset Password");
 
         initialize();
 
@@ -67,6 +76,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         etxt_email = (TextInputEditText) findViewById(R.id.etxt_email);
         reset_pass = (MaterialButton) findViewById(R.id.btn_reset_password);
         sign_in = (TextView) findViewById(R.id.tv_signin);
+
+
+
 
     }
 
@@ -156,5 +168,20 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 });
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void hideSoftKeyboard() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }
+
 
 }
