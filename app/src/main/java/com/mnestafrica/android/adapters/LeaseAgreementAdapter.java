@@ -1,5 +1,6 @@
 package com.mnestafrica.android.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.mnestafrica.android.R;
+import com.mnestafrica.android.activities.ActivityWebView;
+import com.mnestafrica.android.activities.MainActivity;
+import com.mnestafrica.android.dependancies.Tools;
 import com.mnestafrica.android.models.LeaseAgreement;
 
 
@@ -78,13 +82,9 @@ public class LeaseAgreementAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View v) {
 
+//                    Tools.openInAppBrowser( context, obj.getLink(), false);
+
                     WebView myWebView = new WebView(context);
-                    myWebView.setDownloadListener(new DownloadListener() {
-                        @Override
-                        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                            myWebView.loadUrl(obj.getLink());
-                        }
-                    });
                     myWebView.loadUrl(obj.getLink());
 
                 }

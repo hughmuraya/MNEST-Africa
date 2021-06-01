@@ -4,6 +4,7 @@ public class Constants {
 
     //AUTH TOKEN
     public static String AUTH_TOKEN = "";
+    public static String PASS = "";
 
     /*ENDPOINT*/
     public static String ENDPOINT = "https://mnestafrica.com/";

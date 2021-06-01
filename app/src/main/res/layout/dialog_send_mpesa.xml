@@ -37,7 +37,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Thi transaction is from your wallet to m-Pesa"
+                android:text="This transaction is from your wallet to m-Pesa"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                 android:textColor="@color/colorAccent"
                 android:textStyle="italic"
@@ -120,6 +120,39 @@
                     android:hint="Phone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/lyt_pass_confirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Please enter your account password to continue"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:fontFamily="sans-serif-medium" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_small"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etxt_pasword_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="Password"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -156,6 +189,7 @@
             android:layout_marginHorizontal="@dimen/spacing_middle"
             android:text="@string/withdraw"
             android:textColor="@android:color/white"
+            android:enabled="false"
             android:textAlignment="center" />
 
     </LinearLayout>

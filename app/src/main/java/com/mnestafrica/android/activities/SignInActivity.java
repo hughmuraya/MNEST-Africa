@@ -136,7 +136,7 @@ public class SignInActivity extends AppCompatActivity {
 
                             if (response.has("auth_token")){
 
-                                auth newUser = new auth(auth_token);
+                                auth newUser = new auth(auth_token,password.getText().toString());
 
                                 Stash.put(Constants.AUTH_TOKEN, newUser);
 

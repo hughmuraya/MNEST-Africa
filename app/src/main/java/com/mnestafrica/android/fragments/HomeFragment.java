@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -40,6 +41,8 @@ public class HomeFragment extends Fragment {
 
     private auth loggedInUser;
 
+    private String pass;
+
     @BindView(R.id.tv_name)
     TextView tv_name;
 
@@ -72,6 +75,7 @@ public class HomeFragment extends Fragment {
 
     @BindView(R.id.wallet_hide)
     View view_hide_balance;
+
 
     public void onAttach(Context ctx) {
         super.onAttach(ctx);
@@ -120,6 +124,11 @@ public class HomeFragment extends Fragment {
         cardView_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                Bundle bundle = new Bundle();
+//                bundle.putString("pass", pass);
+//
+//                Navigation.findNavController(root).navigate(R.id.nav_menu_wallet, bundle);
 
                 NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.nav_menu_wallet);
 

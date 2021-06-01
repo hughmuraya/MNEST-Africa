@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
@@ -31,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
 import com.mnestafrica.android.R;
+import com.mnestafrica.android.activities.ActivityWebView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -341,6 +343,15 @@ public class Tools {
             e.printStackTrace();
             return uri;
         }
+    }
+
+    public static void openInAppBrowser(Activity activity, String url, boolean from_notif) {
+        url = appendQuery(url, "t=" + System.currentTimeMillis());
+        if (!URLUtil.isValidUrl(url)) {
+            Toast.makeText(activity, "Ops, Cannot open url", Toast.LENGTH_LONG).show();
+            return;
+        }
+        ActivityWebView.navigate(activity, url, from_notif);
     }
 
 

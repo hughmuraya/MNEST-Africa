@@ -214,11 +214,11 @@ public class MyProfileFragment extends Fragment {
                                     @Override
                                     public void onClick(View v) {
 
-                                        Intent i = new Intent(Intent.ACTION_SEND);
-                                        i.setType("email/rfc822");
+                                        Intent i = new Intent(Intent.ACTION_SENDTO);
+                                        i.setData(Uri.parse("mailto:"));
                                         i.putExtra(Intent.EXTRA_EMAIL  , new String[]{agent_email});
                                         i.putExtra(Intent.EXTRA_SUBJECT, "Enquire");
-                                        i.putExtra(Intent.EXTRA_TEXT   , "Dear "+agent+", ");
+                                        i.putExtra(Intent.EXTRA_TEXT   , "Dear "+agent+",\n ");
                                         try {
                                             startActivity(i);
                                         } catch (android.content.ActivityNotFoundException ex) {

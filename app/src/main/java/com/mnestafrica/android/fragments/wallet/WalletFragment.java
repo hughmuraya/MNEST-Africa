@@ -10,6 +10,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +59,12 @@ public class WalletFragment extends Fragment {
     private Context context;
 
     private auth loggedInUser;
+    private auth pass;
 
     private TextInputEditText amount;
     private TextInputEditText phone;
+    private LinearLayout lytPassConfirm;
+    private TextInputEditText pass_confirm;
 
     private WalletTransactionAdapter mAdapter;
     private ArrayList<WalletTransaction> walletTransactionArrayList;
@@ -110,6 +115,7 @@ public class WalletFragment extends Fragment {
     View view_hide_balance;
 
 
+
     public void onAttach(Context ctx) {
         super.onAttach(ctx);
         this.context = ctx;
@@ -127,7 +133,12 @@ public class WalletFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_wallet, container, false);
         unbinder = ButterKnife.bind(this, root);
 
+
+
         loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
+        pass= (auth) Stash.getObject(Constants.PASS, auth.class);
+
+//        Toast.makeText(context, String.valueOf(loggedInUser), Toast.LENGTH_SHORT).show();
 
         initialise();
 
@@ -213,7 +224,6 @@ public class WalletFragment extends Fragment {
         refresh_balance.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 loadWalletDetails();
@@ -546,6 +556,8 @@ public class WalletFragment extends Fragment {
 
         amount = (TextInputEditText) dialog.findViewById(R.id.etxt_withdraw_amount);
         phone = (TextInputEditText) dialog.findViewById(R.id.etxt_withdraw_phone);
+        lytPassConfirm = dialog.findViewById(R.id.lyt_pass_confirmation);
+        pass_confirm = (TextInputEditText) dialog.findViewById(R.id.etxt_pasword_confirm);
 
 
 
@@ -563,77 +575,120 @@ public class WalletFragment extends Fragment {
             }
         });
 
+       phone.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+               if (phone.length() >= 10) {
+
+                   lytPassConfirm.setVisibility(View.VISIBLE);
+                   dialog.findViewById(R.id.btn_withdraw).setEnabled(true);
+
+               } else {
+
+                   lytPassConfirm.setVisibility(View.GONE);
+                   dialog.findViewById(R.id.btn_withdraw).setEnabled(false);
+               }
+
+
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+
+           }
+       });
+
         ((MaterialButton) dialog.findViewById(R.id.btn_withdraw)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String passConfimed = pass.getPass();
 
-                JSONObject jsonObject = new JSONObject();
-                try {
+                if (passConfimed.equals(pass_confirm.getText().toString())){
 
-                    jsonObject.put("amount", amount.getText().toString());
-                    jsonObject.put("mobile", phone.getText().toString());
+                    JSONObject jsonObject = new JSONObject();
+                    try {
 
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                String auth_token = loggedInUser.getAuth_token();
-
-                AndroidNetworking.post(Constants.ENDPOINT+Constants.WALLET_WITHDRAW)
-                        .addHeaders("Authorization","Token "+ auth_token)
-                        .addHeaders("Accept", "*/*")
-                        .addHeaders("Accept", "gzip, deflate, br")
-                        .addHeaders("Connection","keep-alive")
-                        .setContentType("application.json")
-                        .addJSONObjectBody(jsonObject) // posting json
-                        .build()
-                        .getAsJSONObject(new JSONObjectRequestListener(){
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Log.e(TAG, response.toString());
-
-                                try {
-
-                                    boolean  status = response.has("success") && response.getBoolean("success");
-                                    String error = response.has("error") ? response.getString("error") : "";
-                                    String message = response.has("message") ? response.getString("message") : "";
+                        jsonObject.put("amount", amount.getText().toString());
+                        jsonObject.put("mobile", phone.getText().toString());
 
 
-                                    if (status){
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                                        dialog.dismiss();
-                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                                        loadWalletDetails();
-                                        loadWalletTransactions();
+                    String auth_token = loggedInUser.getAuth_token();
 
+                    AndroidNetworking.post(Constants.ENDPOINT+Constants.WALLET_WITHDRAW)
+                            .addHeaders("Authorization","Token "+ auth_token)
+                            .addHeaders("Accept", "*/*")
+                            .addHeaders("Accept", "gzip, deflate, br")
+                            .addHeaders("Connection","keep-alive")
+                            .setContentType("application.json")
+                            .addJSONObjectBody(jsonObject) // posting json
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener(){
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.e(TAG, response.toString());
+
+                                    try {
+
+                                        boolean  status = response.has("success") && response.getBoolean("success");
+                                        String error = response.has("error") ? response.getString("error") : "";
+                                        String message = response.has("message") ? response.getString("message") : "";
+
+
+                                        if (status){
+
+                                            dialog.dismiss();
+                                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                            loadWalletDetails();
+                                            loadWalletTransactions();
+
+                                        }
+                                        else if(!status) {
+
+                                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        else {
+
+                                            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    else if(!status) {
 
-                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-
-                                    }
-                                    else {
-
-                                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
-
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
 
-                            }
+                                @Override
+                                public void onError(ANError error) {
+                                    // handle error
+                                    Log.e(TAG, String.valueOf(error.getErrorCode()));
 
-                            @Override
-                            public void onError(ANError error) {
-                                // handle error
-                                Log.e(TAG, error.getErrorBody());
-                                Toast.makeText(context, "Error: "+error.getErrorBody(), Toast.LENGTH_SHORT).show();
+                                    if (error.getErrorCode()==0){
+                                        Toast.makeText(context, "An error occured! Try again later", Toast.LENGTH_SHORT).show();
+                                    }else {
 
-                            }
-                        });
+                                        Toast.makeText(context, "Error: " + error.getErrorBody(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                }
+                else {
+                    Toast.makeText(context, String.valueOf(pass), Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
