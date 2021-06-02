@@ -1,5 +1,6 @@
 package com.mnestafrica.android.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -22,6 +23,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.fxn.stash.Stash;
 import com.google.android.material.snackbar.Snackbar;
 import com.mnestafrica.android.R;
+import com.mnestafrica.android.activities.SignInActivity;
 import com.mnestafrica.android.dependancies.Constants;
 import com.mnestafrica.android.models.auth;
 
@@ -42,6 +44,8 @@ public class HomeFragment extends Fragment {
     private auth loggedInUser;
 
     private String pass;
+
+    private ProgressDialog pDialog;
 
     @BindView(R.id.tv_name)
     TextView tv_name;
@@ -96,6 +100,12 @@ public class HomeFragment extends Fragment {
         unbinder = ButterKnife.bind(this, root);
 
         loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
+
+        pDialog = new ProgressDialog(context);
+        pDialog.setTitle("Loading...");
+        pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
+        pDialog.show();
 
         loadCurrentUser();
         loadWalletDetails();
@@ -243,6 +253,11 @@ public class HomeFragment extends Fragment {
 
                         try {
 
+                            if (pDialog != null && pDialog.isShowing()) {
+                                pDialog.hide();
+                                pDialog.cancel();
+                            }
+
                             boolean  status = response.has("success") && response.getBoolean("success");
                             String error = response.has("error") ? response.getString("error") : "";
                             String message = response.has("message") ? response.getString("message") : "";
@@ -264,6 +279,11 @@ public class HomeFragment extends Fragment {
                             }
                             else {
 
+                                if (pDialog != null && pDialog.isShowing()) {
+                                    pDialog.hide();
+                                    pDialog.cancel();
+                                }
+
                                 Snackbar.make(root.findViewById(R.id.frag_home), message, Snackbar.LENGTH_LONG).show();
 
                             }
@@ -278,6 +298,11 @@ public class HomeFragment extends Fragment {
                     public void onError(ANError error) {
                         // handle error
 //                        Log.e(TAG, error.getErrorBody());
+
+                        if (pDialog != null && pDialog.isShowing()) {
+                            pDialog.hide();
+                            pDialog.cancel();
+                        }
 
                         Snackbar.make(root.findViewById(R.id.frag_home), "Error: " + error.getErrorBody(), Snackbar.LENGTH_LONG).show();
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "677629863241",
+    "project_id": "mnest-africa",
+    "storage_bucket": "mnest-africa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677629863241:android:4ddbf6282362d22da6e698",
+        "android_client_info": {
+          "package_name": "com.mnestafrica.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677629863241-vmja6sar7k4qpdvr82ebv0o842caifv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrYj0hZpM13fqLbKAHcxBTxBtak318lKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677629863241-vmja6sar7k4qpdvr82ebv0o842caifv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

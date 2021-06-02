@@ -1,6 +1,7 @@
 package com.mnestafrica.android.fragments.wallet;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -68,6 +69,8 @@ public class WalletFragment extends Fragment {
 
     private WalletTransactionAdapter mAdapter;
     private ArrayList<WalletTransaction> walletTransactionArrayList;
+
+    private ProgressDialog pDialog;
 
     @BindView(R.id.card_pay_rent)
     CardView card_pay_rent;
@@ -138,7 +141,11 @@ public class WalletFragment extends Fragment {
         loggedInUser = (auth) Stash.getObject(Constants.AUTH_TOKEN, auth.class);
         pass= (auth) Stash.getObject(Constants.PASS, auth.class);
 
-//        Toast.makeText(context, String.valueOf(loggedInUser), Toast.LENGTH_SHORT).show();
+        pDialog = new ProgressDialog(context);
+        pDialog.setTitle("Loading...");
+        pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
+        pDialog.show();
 
         initialise();
 
@@ -274,6 +281,11 @@ public class WalletFragment extends Fragment {
 
                         try {
 
+                            if (pDialog != null && pDialog.isShowing()) {
+                                pDialog.hide();
+                                pDialog.cancel();
+                            }
+
                             boolean  status = response.has("success") && response.getBoolean("success");
                             String error = response.has("error") ? response.getString("error") : "";
                             String message = response.has("message") ? response.getString("message") : "";
@@ -296,6 +308,11 @@ public class WalletFragment extends Fragment {
                             }
                             else {
 
+                                if (pDialog != null && pDialog.isShowing()) {
+                                    pDialog.hide();
+                                    pDialog.cancel();
+                                }
+
                                 Snackbar.make(root.findViewById(R.id.frag_wallet), message, Snackbar.LENGTH_LONG).show();
 
                             }
@@ -310,6 +327,11 @@ public class WalletFragment extends Fragment {
                     public void onError(ANError error) {
                         // handle error
 //                        Log.e(TAG, error.getErrorBody());
+
+                        if (pDialog != null && pDialog.isShowing()) {
+                            pDialog.hide();
+                            pDialog.cancel();
+                        }
 
                         Snackbar.make(root.findViewById(R.id.frag_wallet), "Error: " + error.getErrorBody(), Snackbar.LENGTH_LONG).show();
 
